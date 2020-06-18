@@ -5,6 +5,7 @@ module.exports = app => {
   let adminAuth = app.middleware.adminAuth()
 
   router.get('/default/getArticleList', controller.default.home.getArticleList)
+  router.get('/default/getTypeList', controller.default.home.getTypeList)
 
   router.get('/default/getArticleInfo', controller.default.article.getArticleInfo)
 }
