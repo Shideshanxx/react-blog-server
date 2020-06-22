@@ -109,7 +109,7 @@ class ArticleController extends BaseController {
 			let sql = articleAuth(tmpArticle.id, tmpArticle.userId);
 			const res = await this.app.mysql.query(sql)
 
-			// 判断是否同是同个用户或者是 超级管理员挺哥 id:1
+			// 判断是否同是同个用户或者是 超级管理员 id:1
 			if (res.length > 0 || ~~userInfo.userId === 1) {
 				result = await this.app.mysql.update('article', tmpArticle)
 			} else {

@@ -22,7 +22,7 @@ const utility = require('utility');
 
 
 class BaseController extends Controller {
-  // 2020/3/8 已采用七牛云  此本地上传文件方法 uploadFile弃用，但不删，不调用就是了
+  // 已采用七牛云  此本地上传文件方法 uploadFile弃用，但不删，不调用就是了
   async uploadFile(category = '') {
     const ctx = this.ctx;
     //egg-multipart 已经帮我们处理文件二进制对象

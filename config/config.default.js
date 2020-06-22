@@ -23,7 +23,6 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
-
   // 解除文件上传大小限制
   config.bodyParser = {
     jsonLimit: '100mb',
@@ -36,8 +35,6 @@ module.exports = appInfo => {
     mode: 'stream',
     fileExtensions: ['.jpg', '.png', '.gif', '.jpeg'], // 扩展几种上传的文件格式
   };
-
-
 
   // egg-jwt token机制 设置密钥
   exports.jwt = {
@@ -60,7 +57,7 @@ module.exports = appInfo => {
 
   config.cors = {
     origin: '*', //只允许这个域进行访问接口  ['*'] 是谁都可以访问
-    credentials: true, //允许Cookie可以跨域
+    credentials: true, //允许Cookie、session可以跨域
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
   };
 

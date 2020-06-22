@@ -4,9 +4,9 @@ const BaseController = require('./BaseController');
 
 const qiniu = require("qiniu");
 
-const accessKey = "七牛云accessKey";
-const secretKey = "七牛云secretKey";
-const bucket = "七牛云静态资源的目录";
+const accessKey = "m3tlpYv_SumLCH6WA9JcsO2EvFvEQD-v0PGjCDFS";
+const secretKey = "DmWgRNlJQM578pmuk0d2CduYOtQeKgw3___TXPvU";
+const bucket = "shideshanspace";
 
 class QiniuController extends BaseController {
     //（获取七牛上传token）

@@ -13,12 +13,15 @@ class UserController extends BaseController {
     let mobile = this.ctx.request.body.mobile;
     let password = this.ctx.request.body.password;
 
+    // let mobile = this.ctx.query.mobile;
+    // let password = this.ctx.query.password;
+
     const res = await this.app.mysql.get('user', {
       mobile: mobile
     })
 
-    if (res && bcryptjs.compareSync(password, res.password)) {
-
+    // if (res && bcryptjs.compareSync(password, res.password)) {
+    if (res && password===res.password) {
       if(~~res.auth == 0){
         this.ctx.body = {
           code: 500,
@@ -64,7 +67,6 @@ class UserController extends BaseController {
     }
   }
 
-
   async getUserInfo() {
     let userInfo = await this.getTokenInfo()
 
@@ -88,7 +90,6 @@ class UserController extends BaseController {
     }
   }
 
-
   // 设置用户信息
   async updateUserInfo() {
 
@@ -105,7 +106,6 @@ class UserController extends BaseController {
       }
     }
   }
-
 
    // 用户修改密码
    async updatePassword() {
@@ -167,8 +167,6 @@ class UserController extends BaseController {
     }
   }
 
-
-
   // 文章总数 
   async getUserArticleTotal() {
     let userInfo = await this.getTokenInfo()
@@ -229,7 +227,6 @@ class UserController extends BaseController {
     }
   }
 
-
   // 老接口了 配合本地上传使用 现在改为7牛
 	// 上传头像
   async uploadAvatar() {
@@ -261,8 +258,6 @@ class UserController extends BaseController {
     }
   }
 
-
-
   //添加或修改联系方式
 	async addEditContact() {
 		let tmpArticle = this.ctx.request.body
@@ -285,8 +280,6 @@ class UserController extends BaseController {
 			}
 		}
 	}
-
-
   
 	//删除联系方式
 	async delContact() {
@@ -304,7 +297,6 @@ class UserController extends BaseController {
       }
     }
   }
-  
 
   //添加或修改赞赏码
 	async addEditReward() {
@@ -319,9 +311,6 @@ class UserController extends BaseController {
 			}
 		}
 	}
-
-
-
 };
 
 module.exports = UserController;
