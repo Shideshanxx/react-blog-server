@@ -13,7 +13,8 @@ class UserController extends BaseController {
         const res = await this.app.mysql.get('user', {
             mobile: mobile
         })
-        if (res && bcryptjs.compareSync(password, res.password)) {
+        if (res && password === res.password) {
+        // if (res && bcryptjs.compareSync(password, res.password)) {
             //登录成功,进行toke
             /*
              * sign({根据什么生成token})

@@ -7,6 +7,7 @@ module.exports = app => {
   router.get('/default/getArticleList', controller.default.home.getArticleList)
   router.get('/default/getTypeList', controller.default.home.getTypeList)
   router.get('/default/readingVolume', controller.default.home.readingVolume)
+  router.get('/default/getRewardCode', controller.default.home.getRewardCode)
   router.post('/default/feedback', controller.default.home.feedback)
   router.get('/default/getSearchList', controller.default.home.getSearchList)
   router.get('/default/getUserArticleList', controller.default.home.getUserArticleList)
@@ -23,6 +24,7 @@ module.exports = app => {
   router.post('/default/updateMobile', jwt, controller.default.user.updateMobile)
   router.post('/default/addEditContact',jwt, controller.default.user.addEditContact)
   router.post('/default/delContact', jwt, controller.default.user.delContact)
+  router.post('/default/addEditReward', jwt, controller.default.user.addEditReward)
 
   router.get('/default/getArticleInfo', controller.default.article.getArticleInfo)
   router.get('/default/getArticleComment', controller.default.article.getArticleComment)
