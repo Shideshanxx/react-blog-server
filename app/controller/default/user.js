@@ -13,8 +13,8 @@ class UserController extends BaseController {
         const res = await this.app.mysql.get('user', {
             mobile: mobile
         })
-        if (res && password === res.password) {
-        // if (res && bcryptjs.compareSync(password, res.password)) {
+        // if (res && password === res.password) {
+        if (res && bcryptjs.compareSync(password, res.password)) {
             //登录成功,进行toke
             /*
              * sign({根据什么生成token})
@@ -215,11 +215,6 @@ class UserController extends BaseController {
         })
 
         if (res && bcryptjs.compareSync(oldPassword, res.password)) {
-            this.ctx.body = {
-                code: 500,
-                msg: '旧密码不正确!',
-            }
-        } else {
             const result = await this.app.mysql.update('user', {
                 id: userInfo.userId,
                 password: bcryptjs.hashSync(password, 10),
@@ -230,6 +225,11 @@ class UserController extends BaseController {
                     code: 200,
                     msg: '修改成功!',
                 }
+            }
+        } else {
+            this.ctx.body = {
+                code: 500,
+                msg: '旧密码不正确!',
             }
         }
     }

@@ -8,7 +8,7 @@ class QiniuService extends Service {
     console.log(re)
     
     const res = JSON.parse(re.data)  // 这里根据实际返回的数据进行格式化处理，最后返回一个对象
-    // console.log(res)
+
     return res.result;
   }
 }

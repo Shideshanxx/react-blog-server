@@ -13,16 +13,13 @@ class UserController extends BaseController {
     let mobile = this.ctx.request.body.mobile;
     let password = this.ctx.request.body.password;
 
-    // let mobile = this.ctx.query.mobile;
-    // let password = this.ctx.query.password;
-
     const res = await this.app.mysql.get('user', {
       mobile: mobile
     })
 
-    // if (res && bcryptjs.compareSync(password, res.password)) {
-    if (res && password===res.password) {
-      if(~~res.auth == 0){
+    if (res && bcryptjs.compareSync(password, res.password)) {
+      // if (res && password===res.password) {
+      if (~~res.auth == 0) {
         this.ctx.body = {
           code: 500,
           msg: '普通用户非博主，无权进后台',
@@ -70,12 +67,12 @@ class UserController extends BaseController {
   async getUserInfo() {
     let userInfo = await this.getTokenInfo()
 
-    const res = await this.app.mysql.get('user',{
+    const res = await this.app.mysql.get('user', {
       id: userInfo.userId
     })
     delete res.password;
-    
-    const res1 = await this.app.mysql.get('contact',{
+
+    const res1 = await this.app.mysql.get('contact', {
       userId: userInfo.userId
     })
 
@@ -107,8 +104,8 @@ class UserController extends BaseController {
     }
   }
 
-   // 用户修改密码
-   async updatePassword() {
+  // 用户修改密码
+  async updatePassword() {
     let oldPassword = this.ctx.request.body.oldPassword
     let password = this.ctx.request.body.newPassword
     let userInfo = await this.getTokenInfo()
@@ -118,11 +115,6 @@ class UserController extends BaseController {
     })
 
     if (res && bcryptjs.compareSync(oldPassword, res.password)) {
-      this.ctx.body = {
-        code: 500,
-        msg: '旧密码不正确!',
-      }
-    } else {
       const result = await this.app.mysql.update('user', {
         id: userInfo.userId,
         password: bcryptjs.hashSync(password, 10),
@@ -133,6 +125,11 @@ class UserController extends BaseController {
           code: 200,
           msg: '修改成功!',
         }
+      }
+    } else {
+      this.ctx.body = {
+        code: 500,
+        msg: '旧密码不正确!',
       }
     }
   }
@@ -146,12 +143,12 @@ class UserController extends BaseController {
       mobile: mobile
     })
 
-    if(isHas) {
+    if (isHas) {
       this.ctx.body = {
         code: 500,
         msg: '该手机号已有绑定，请换一个试试!',
       }
-      return 
+      return
     }
 
     const result = await this.app.mysql.update('user', {
@@ -227,10 +224,10 @@ class UserController extends BaseController {
     }
   }
 
-  // 老接口了 配合本地上传使用 现在改为7牛
-	// 上传头像
+  // 老接口了 （已弃用，后续改用七牛云）
+  // 上传头像
   async uploadAvatar() {
-    let {url} = await this.uploadFile('avatar')
+    let { url } = await this.uploadFile('avatar')
 
     this.ctx.body = {
       code: 200,
@@ -238,9 +235,9 @@ class UserController extends BaseController {
     }
   }
 
-	// 上传联系方式二维码
+  // 上传联系方式二维码（已弃用，后续改用七牛云）
   async uploadCode() {
-    let {url} = await this.uploadFile('contactCode')
+    let { url } = await this.uploadFile('contactCode')
 
     this.ctx.body = {
       code: 200,
@@ -248,9 +245,9 @@ class UserController extends BaseController {
     }
   }
 
-  // 上传赞赏码
+  // 上传赞赏码（已弃用，后续改用七牛云）
   async uploadRewardCode() {
-    let {url} = await this.uploadFile('rewardCode')
+    let { url } = await this.uploadFile('rewardCode')
 
     this.ctx.body = {
       code: 200,
@@ -259,36 +256,36 @@ class UserController extends BaseController {
   }
 
   //添加或修改联系方式
-	async addEditContact() {
-		let tmpArticle = this.ctx.request.body
+  async addEditContact() {
+    let tmpArticle = this.ctx.request.body
     let userInfo = await this.getTokenInfo()
     tmpArticle.userId = userInfo.userId
 
-		let result;
-		if (tmpArticle.id) {
-			result = await this.app.mysql.update('contact', tmpArticle)
-		} else {
-			result = await this.app.mysql.insert('contact', tmpArticle)
-		}
+    let result;
+    if (tmpArticle.id) {
+      result = await this.app.mysql.update('contact', tmpArticle)
+    } else {
+      result = await this.app.mysql.insert('contact', tmpArticle)
+    }
 
-		const insertSuccess = result.affectedRows === 1
+    const insertSuccess = result.affectedRows === 1
 
-		if (insertSuccess) {
-			this.ctx.body = {
-				code: 200,
-				msg: '操作成功!',
-			}
-		}
-	}
-  
-	//删除联系方式
-	async delContact() {
-		let id = this.ctx.request.body.id
+    if (insertSuccess) {
+      this.ctx.body = {
+        code: 200,
+        msg: '操作成功!',
+      }
+    }
+  }
+
+  //删除联系方式
+  async delContact() {
+    let id = this.ctx.request.body.id
     let userInfo = await this.getTokenInfo()
 
 
     const res = await this.app.mysql.delete('contact', { id, userId: userInfo.userId })
-    
+
     const insertSuccess = res.affectedRows === 1
     if (insertSuccess) {
       this.ctx.body = {
@@ -298,19 +295,19 @@ class UserController extends BaseController {
     }
   }
 
-  //添加或修改赞赏码
-	async addEditReward() {
-		let tmp = this.ctx.request.body
+  //添加或修改赞赏码 
+  async addEditReward() {
+    let tmp = this.ctx.request.body
     let userInfo = await this.getTokenInfo()
     tmp.id = userInfo.userId
-		let result = await this.app.mysql.update('user', tmp)
-		if (result.affectedRows === 1) {
-			this.ctx.body = {
-				code: 200,
-				msg: '操作成功!',
-			}
-		}
-	}
+    let result = await this.app.mysql.update('user', tmp)
+    if (result.affectedRows === 1) {
+      this.ctx.body = {
+        code: 200,
+        msg: '操作成功!',
+      }
+    }
+  }
 };
 
 module.exports = UserController;

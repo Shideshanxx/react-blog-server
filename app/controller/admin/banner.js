@@ -115,7 +115,7 @@ class BannerController extends BaseController {
 	}
 
 
-	// 上传banner图片 (本地上传 已弃用)
+	// 上传banner图片 (本地上传 已弃用, 后续再改用七牛云)
 	async uploadBanner() {
 		let {
 			url

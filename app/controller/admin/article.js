@@ -161,7 +161,7 @@ class ArticleController extends BaseController {
 		}
 	}
 
-	// 上传文章图片 (本地上传图片的服务器 已弃用)
+	// 上传文章图片 (本地上传图片的服务器 已弃用，后续改用七牛云)
 	async uploadArticleImg() {
 		let {
 			url

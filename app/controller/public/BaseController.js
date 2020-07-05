@@ -32,7 +32,7 @@ class BaseController extends Controller {
     const uplaodBasePath = 'app/public/uploads';
 
     // 生成文件名
-    const filename =  utility.md5(stream.filename) + Date.now() + path.extname(stream.filename).toLocaleLowerCase();
+    const filename = utility.md5(stream.filename) + Date.now() + path.extname(stream.filename).toLocaleLowerCase();
 
     // 生成文件夹
     const dirname = dayjs(Date.now()).format('YYYY/MM/DD');
@@ -68,7 +68,7 @@ class BaseController extends Controller {
     const host = 'http://' + ctx.request.header.host
 
     return {
-      url: host + path.join('/public/uploads', category, dirname, filename).replace(/\\/g,"/")
+      url: host + path.join('/public/uploads', category, dirname, filename).replace(/\\/g, "/")
     }
   }
 
@@ -80,15 +80,15 @@ class BaseController extends Controller {
   *  tmp {callUserId: 通知的用户id}
   *  tmp {source: 出处 文章id 或者 评论id ，数据库为int型默认为0，选填}
   */
-  async setMsg(tmp){
-    if(tmp.userId == tmp.callUserId) return // 自己就不用给自己发消息了
+  async setMsg(tmp) {
+    if (tmp.userId == tmp.callUserId) return // 自己就不用给自己发消息了
     await this.app.mysql.insert('msg', tmp)
   }
 
   // token获取当前登录用户的信息
- async getTokenInfo(){
-   return await this.ctx.app.jwt.verify(this.ctx.request.header.authorization.split(' ')[1], this.config.jwt.secret)
- }
+  async getTokenInfo() {
+    return await this.ctx.app.jwt.verify(this.ctx.request.header.authorization.split(' ')[1], this.config.jwt.secret)
+  }
 }
 
 module.exports = BaseController;
