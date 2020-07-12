@@ -42,7 +42,7 @@ class ArticleController extends BaseController {
           u.userName AS userName 
         FROM
           COMMENT c
-          LEFT JOIN USER u ON c.userId = u.Id
+          LEFT JOIN user u ON c.userId = u.Id
           LEFT JOIN commentlike l ON l.commentId = c.id 
           AND l.STATUS = 1 
         WHERE
