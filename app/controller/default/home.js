@@ -27,7 +27,7 @@ class HomeController extends Controller {
       FROM
         article a
       LEFT JOIN type t ON a.typeId = t.Id
-      LEFT JOIN USER u ON a.userId = u.Id
+      LEFT JOIN user u ON a.userId = u.Id
       LEFT JOIN articlelike al ON al.articleId = a.Id AND al.status = '1'
       GROUP BY a.id
       ORDER BY ${id == 0 ? 'createTime' : 'viewCount'} DESC
@@ -174,16 +174,16 @@ class HomeController extends Controller {
     } else {
       sql = `
       SELECT
-        USER.id AS id,
-        USER.userName AS userName,
-        USER.tags AS tags,
-        USER.avatar AS avatar,
-        USER.post AS post,
-        USER.address AS address,
-        USER.autograph AS autograph
+        user.id AS id,
+        user.userName AS userName,
+        user.tags AS tags,
+        user.avatar AS avatar,
+        user.post AS post,
+        user.address AS address,
+        user.autograph AS autograph
       FROM
-        USER
-      WHERE USER.userName  
+        user
+      WHERE user.userName  
       LIKE '%${searchVal}%'
       `
     }

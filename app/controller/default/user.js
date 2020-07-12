@@ -44,7 +44,7 @@ class UserController extends BaseController {
                 (SELECT
                 count(ac.id) AS count
             FROM
-                articleLike AS ac
+                articlelike AS ac
             LEFT JOIN article a ON a.id = ac.articleId
             LEFT JOIN user u ON u.id = a.userId
             WHERE u.id = ${res.userId} AND ac.status = '1' ) as cNum
@@ -354,7 +354,7 @@ class UserController extends BaseController {
                         (SELECT
                     count(ac.id) AS count
                 FROM
-                    articleLike AS ac
+                    articlelike AS ac
                 LEFT JOIN article a ON a.id = ac.articleId
                 LEFT JOIN user u ON u.id = a.userId
                 WHERE u.id = ${resData.userId} AND ac.status = '1' ) as cNum

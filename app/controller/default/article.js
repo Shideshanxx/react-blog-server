@@ -21,7 +21,7 @@ class ArticleController extends BaseController {
         article a
       LEFT JOIN type t ON a.typeId = t.id
       LEFT JOIN user u ON a.userId = u.id
-      LEFT JOIN articleLike al ON al.articleId = a.id AND al.STATUS = 1 
+      LEFT JOIN articlelike al ON al.articleId = a.id AND al.STATUS = 1 
       WHERE a.id=${id}
     `
     const result = await this.app.mysql.query(sql)
@@ -109,12 +109,12 @@ class ArticleController extends BaseController {
   // 查询文章点赞状态
   async getLikeStatus () {
     let userInfo = await this.getTokenInfo()
-    const result = await this.app.mysql.get('articleLike', {
+    const result = await this.app.mysql.get('articlelike', {
       userId: userInfo.userId,
       articleId: this.ctx.query.id
     });
 
-    let sql = `SELECT COUNT(id) as count FROM articleLike WHERE articleId = ${this.ctx.query.id} AND status = '1'`
+    let sql = `SELECT COUNT(id) as count FROM articlelike WHERE articleId = ${this.ctx.query.id} AND status = '1'`
     const countRes = await this.app.mysql.query(sql)
 
     this.ctx.body = {
@@ -130,13 +130,13 @@ class ArticleController extends BaseController {
   async articleClickLike() {
     let userInfo = await this.getTokenInfo()
 
-    const queryIsHas = await this.app.mysql.get('articleLike', {
+    const queryIsHas = await this.app.mysql.get('articlelike', {
       userId: userInfo.userId,
       articleId: this.ctx.query.id
     });
 
     if(!queryIsHas){
-      const result = await this.app.mysql.insert('articleLike', {
+      const result = await this.app.mysql.insert('articlelike', {
         userId: userInfo.userId,
         articleId: this.ctx.query.id,
       });
@@ -149,7 +149,7 @@ class ArticleController extends BaseController {
       }
 
     }else{
-      const result = await this.app.mysql.update('articleLike', {
+      const result = await this.app.mysql.update('articlelike', {
         id: queryIsHas.id,
         status: queryIsHas.status === '1' ? '0' : '1'
       });
