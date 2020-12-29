@@ -10,11 +10,11 @@ class UserController extends BaseController {
   }
 
   async login() {
-    let mobile = this.ctx.request.body.mobile;
+    let userName = this.ctx.request.body.mobile;
     let password = this.ctx.request.body.password;
 
     const res = await this.app.mysql.get('user', {
-      mobile: mobile
+      userName
     })
 
     if (res && bcryptjs.compareSync(password, res.password)) {
