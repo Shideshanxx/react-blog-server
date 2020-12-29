@@ -36,9 +36,9 @@ module.exports = appInfo => {
     fileExtensions: ['.jpg', '.png', '.gif', '.jpeg'], // 扩展几种上传的文件格式
   };
 
-  // egg-jwt token机制 设置密钥
+  // 设置jwt设置密钥
   exports.jwt = {
-    secret: "123456" //自己设置的值
+    secret: "shideshan"
   };
 
   //配置中间件，注意login需要和app/middleware下的login.js对应
@@ -55,6 +55,7 @@ module.exports = appInfo => {
     domainWhiteList: ['*']
   };
 
+  // egg-cors用于配置跨域访问
   config.cors = {
     origin: '*', //只允许这个域进行访问接口  ['*'] 是谁都可以访问
     credentials: true, //允许Cookie、session可以跨域
@@ -64,18 +65,12 @@ module.exports = appInfo => {
 
   // 数据库连接配置
   config.mysql = {
-    // database configuration
     client: {
-      // host
-      host: '47.111.168.36',
-      // port
+      host: '127.0.0.1',
       port: '3306',
-      // username
       user: 'root',
-      // password
-      password: '123456',
-      // database
-      database: 'react_blog',
+      password: 'shideshan666',
+      database: 'egg_blog',
     },
     // load into app, default is open
     app: true,

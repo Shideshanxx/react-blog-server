@@ -39,7 +39,7 @@ class UserController extends BaseController {
         mobile: res.mobile,
         password: res.password,
         auth: res.auth
-      }, "123456", {
+      }, this.app.config.jwt.secret, {
         expiresIn: '24h'
       })
 
