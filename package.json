@@ -32,6 +32,7 @@
   },
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-service",
+    "prod": "EGG_SERVER_ENV=prod egg-scripts start --title=egg-server-lesson",
     "stop": "egg-scripts stop --title=egg-server-service",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
