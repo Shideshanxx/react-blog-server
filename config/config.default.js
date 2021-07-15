@@ -1,5 +1,4 @@
 /* eslint valid-jsdoc: "off" */
-
 "use strict";
 
 const publicConfig = require("./publicConfig.js");
@@ -22,7 +21,12 @@ module.exports = (appInfo) => {
 
   // add your user config here
   const userConfig = {
-    // myAppName: 'egg',
+    myAppName: "xxxx",
+  };
+
+  // egg-jwt token机制 设置密钥
+  config.jwt = {
+    secret: publicConfig.tokenKey, // 自己设置的值
   };
 
   // 解除文件上传大小限制
@@ -38,12 +42,7 @@ module.exports = (appInfo) => {
     fileExtensions: [".jpg", ".png", ".gif", ".jpeg"], // 扩展几种上传的文件格式
   };
 
-  // 设置jwt设置密钥
-  exports.jwt = {
-    secret: publicConfig.tokenKey,
-  };
-
-  //配置中间件，注意login需要和app/middleware下的login.js对应
+  // 配置中间件，注意login需要和app/middleware下的login.js对应
   config.middleware = ["adminAuth"];
 
   // 跨域设置
@@ -55,10 +54,9 @@ module.exports = (appInfo) => {
     domainWhiteList: ["*"],
   };
 
-  // egg-cors用于配置跨域访问
   config.cors = {
-    origin: "*", //只允许这个域进行访问接口  ['*'] 是谁都可以访问
-    credentials: true, //允许Cookie、session可以跨域
+    // origin: '*', // 只允许这个域进行访问接口 ，前面 【*】覆盖了 可以不写， 写了就覆盖domainWhiteList了
+    credentials: true, // 允许Cookie可以跨域
     allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS",
   };
 
