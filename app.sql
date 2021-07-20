@@ -17,7 +17,7 @@ CREATE TABLE `article` (
   `introduce` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `viewCount` int(11) NOT NULL DEFAULT '0',
   `cover` varchar(255) CHARACTER SET utf8 DEFAULT '0',
-  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createTime` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `userId` int(11) DEFAULT '0',
   `tags` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('1','0') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否公开， 0公开， 1隐藏',

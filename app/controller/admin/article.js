@@ -101,7 +101,7 @@ class ArticleController extends BaseController {
   async addEditArticle() {
     let tmpArticle = this.ctx.request.body;
     let userInfo = await this.getTokenInfo();
-    tmpArticle.userId = userInfo.userId;
+    tmpArticle.userId = userInfo.userId; 
 
     let result;
     if (tmpArticle.id) {
@@ -141,16 +141,27 @@ class ArticleController extends BaseController {
     const result = await this.app.mysql.query(sql);
     // 判断是否同是同个用户或者是 超级管理员
     if (result.length > 0 || ~~userInfo.auth === 2) {
-      const res = await this.app.mysql.delete("article", {
-        id: id,
-      });
-
-      if ((insertSuccess = res.affectedRows === 1)) {
+      try {
+        await this.app.mysql.delete("article", {
+          id: id,
+        });
         this.ctx.body = {
           code: 200,
           msg: "删除成功！",
         };
+      } catch (error) {
+        this.ctx.body = {
+          code: 500,
+          msg: "服务器错误!",
+        };
       }
+      // const insertSuccess = res.affectedRows === 1
+      // if (insertSuccess) {
+      //   this.ctx.body = {
+      //     code: 200,
+      //     msg: "删除成功！",
+      //   };
+      // }
     } else {
       this.ctx.body = {
         code: 500,
